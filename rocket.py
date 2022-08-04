@@ -36,7 +36,7 @@ class Rocket:
             self.x -= self.settings.rocket_speed
 
     def _move_rocket_vertically(self):
-        if self.move_top and self.rect.top > 0:
+        if self.move_top and self.rect.top > self.settings.screen_height / 2:
             self.y -= self.settings.rocket_speed
         if self.move_down and self.rect.bottom < self.screen_rect.bottom:
             self.y += self.settings.rocket_speed

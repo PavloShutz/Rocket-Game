@@ -7,7 +7,7 @@ class Settings:
 
         self.rocket_speed = 1.3
 
-        self.bullet_speed = 0.5
+        self.bullet_speed = 0.75
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (0, 0, 0)
