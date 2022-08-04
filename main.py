@@ -75,6 +75,7 @@ class RocketGame:
         self.rocket.blit_me()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+            bullet.create_laser_sound()
         pygame.display.flip()
 
 
