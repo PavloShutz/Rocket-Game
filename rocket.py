@@ -2,6 +2,7 @@ import pygame
 
 
 class Rocket:
+    """Class represents a rocket in the space!"""
 
     def __init__(self, rocket_game):
         self.screen = rocket_game.screen
@@ -26,7 +27,7 @@ class Rocket:
         self._move_rocket_horizontally()
         self._move_rocket_vertically()
 
-        self._update_coordinates()
+        self._update_rocket_coordinates()
 
     def _move_rocket_horizontally(self):
         if self.move_right and self.rect.right < self.screen_rect.right:
@@ -40,7 +41,7 @@ class Rocket:
         if self.move_down and self.rect.bottom < self.screen_rect.bottom:
             self.y += self.settings.rocket_speed
 
-    def _update_coordinates(self):
+    def _update_rocket_coordinates(self):
         self.rect.x = self.x
         self.rect.y = self.y
 
