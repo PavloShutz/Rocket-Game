@@ -1,6 +1,8 @@
+from random import randint, choice
+
 import pygame
 from pygame.sprite import Sprite
-from random import randint
+from pygame.mixer import Sound
 
 
 class Asteroid(Sprite):
@@ -10,16 +12,20 @@ class Asteroid(Sprite):
         self.screen = rocket_game.screen
         self.settings = rocket_game.settings
 
-        self.image = pygame.image.load('asteroid.png')
+        self.image = pygame.image.load(choice(self.settings.asteroid_images))
         self.rect = self.image.get_rect()
+        self.explosion = Sound("explosion.wav")
 
         self.rect.x = randint(
             0, self.settings.screen_width - 10
         )
-        self.rect.y = randint(self.rect.height,
-                              self.rect.height + 20)
+        self.rect.y = randint(self.rect.height + 30,
+                              self.rect.height + 90)
 
         self.y = float(self.rect.y)
+
+    def __del__(self):
+        pygame.mixer.Sound.play(self.explosion)
 
     def update(self):
         self.y += self.settings.asteroid_speed

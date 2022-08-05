@@ -14,3 +14,4 @@ class Settings:
         self.bullets_allowed = 3
 
         self.asteroid_speed = 0.1
+        self.asteroid_images = ['asteroid1.png', 'asteroid2.png']

@@ -13,7 +13,7 @@ class RocketGame:
     """The main class for Rocket Game"""
 
     def __init__(self):
-        pygame.mixer.init()
+        # pygame.mixer.init()
         pygame.init()
         self.settings = Settings()
 
@@ -24,7 +24,6 @@ class RocketGame:
         self.rocket = Rocket(self)
         self.bullets = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
-
         self._create_asteroids()
 
     def run_game(self):
@@ -88,7 +87,6 @@ class RocketGame:
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.asteroids, True, True
         )
-        # pygame.mixer.Sound.play()
 
     def _create_asteroids(self):
         asteroid = Asteroid(self)
