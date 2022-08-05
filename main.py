@@ -5,6 +5,7 @@ import pygame
 from settings import Settings
 from rocket import Rocket
 from bullet import Bullet
+from asteroid import Asteroid
 
 
 class RocketGame:
@@ -21,6 +22,9 @@ class RocketGame:
         pygame.display.set_caption("Rocket")
         self.rocket = Rocket(self)
         self.bullets = pygame.sprite.Group()
+        self.asteroids = pygame.sprite.Group()
+
+        self._create_asteroids()
 
     def run_game(self):
         while True:
@@ -74,11 +78,16 @@ class RocketGame:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _create_asteroids(self):
+        asteroid = Asteroid(self)
+        self.asteroids.add(asteroid)
+
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.rocket.blit_me()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.asteroids.draw(self.screen)
         pygame.display.flip()
 
 
