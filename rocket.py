@@ -13,7 +13,7 @@ class Rocket:
         self.rect = self.image.get_rect()
 
         # centering our rocket
-        self.rect.center = self.screen_rect.center
+        self.rect.midbottom = self.screen_rect.midbottom
 
         # setting coordinates for our rocket
         self.x = float(self.rect.x)
@@ -26,7 +26,6 @@ class Rocket:
     def update(self):
         self._move_rocket_horizontally()
         self._move_rocket_vertically()
-
         self._update_rocket_coordinates()
 
     def _move_rocket_horizontally(self):

@@ -1,4 +1,5 @@
 import sys
+from random import randint
 
 import pygame
 
@@ -31,6 +32,7 @@ class RocketGame:
             self._check_updates()
             self.rocket.update()
             self._update_bullets()
+            self._update_asteroids()
             self._update_screen()
 
     def _check_updates(self):
@@ -77,9 +79,28 @@ class RocketGame:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+        self._check_to_destroy_asteroid()
+
+    def _update_asteroids(self):
+        self.asteroids.update()
+
+    def _check_to_destroy_asteroid(self):
+        collisions = pygame.sprite.groupcollide(
+            self.bullets, self.asteroids, True, True
+        )
+        # pygame.mixer.Sound.play()
 
     def _create_asteroids(self):
         asteroid = Asteroid(self)
+        asteroid_width = asteroid.rect.width
+        available_space_x = self.settings.screen_width - (2 * asteroid_width)
+        number_asteroids_x = available_space_x // (2 * asteroid_width)
+
+        for asteroid_number in range(randint(1, number_asteroids_x)):
+            asteroid = Asteroid(self)
+            asteroid.x = asteroid_width + 2 * asteroid_width * asteroid_number
+            asteroid.rect.x = asteroid.x
+            self.asteroids.add(asteroid)
         self.asteroids.add(asteroid)
 
     def _update_screen(self):
