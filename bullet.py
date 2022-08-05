@@ -25,4 +25,4 @@ class Bullet(Sprite):
         pg.draw.rect(self.screen, self.color, self.rect)
 
     def create_laser_sound(self):
-        pg.mixer.Sound.play(self.laser_sound, maxtime=90)
+        pg.mixer.Sound.play(self.laser_sound)

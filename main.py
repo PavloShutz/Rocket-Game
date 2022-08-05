@@ -11,6 +11,7 @@ class RocketGame:
     """The main class for Rocket Game"""
 
     def __init__(self):
+        pygame.mixer.init()
         pygame.init()
         self.settings = Settings()
 
@@ -46,6 +47,8 @@ class RocketGame:
             self.rocket.move_top = True
         elif event.key == pygame.K_DOWN:
             self.rocket.move_down = True
+        elif event.key == pygame.K_q:
+            sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
 
@@ -63,6 +66,7 @@ class RocketGame:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+            new_bullet.create_laser_sound()
 
     def _update_bullets(self):
         self.bullets.update()
@@ -75,7 +79,6 @@ class RocketGame:
         self.rocket.blit_me()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-            bullet.create_laser_sound()
         pygame.display.flip()
 
 
