@@ -20,13 +20,6 @@ class RocketGame:
             self.settings.screen_width, self.settings.screen_height
         ))
         pygame.display.set_caption("Rocket")
-        self.font = pygame.font.Font(r"C:\Windows\Fonts\arial.ttf", 25)
-        self.restart_text = self.font.render("Restart", True, (0, 255, 0))
-        self.text_position = self.restart_text.get_rect()
-        self.text_position.center = (
-            self.settings.screen_width // 2,
-            self.settings.screen_height // 2,
-        )
         self.paused_game = False
         self.rocket = Rocket(self)
         self.bullets = pygame.sprite.Group()
@@ -39,7 +32,7 @@ class RocketGame:
             self.rocket.update()
             self._update_bullets()
             self._update_asteroids()
-            self._check_asteroid_reaches_bottom()
+            self._check_asteroid_collision()
             self._update_screen()
 
     def _check_updates(self):
@@ -89,15 +82,18 @@ class RocketGame:
                 if event.type == pygame.QUIT:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_r:
+                    if event.key == pygame.K_SPACE:
                         self.paused_game = False
                         self.__init__()
+                    elif event.key == pygame.K_q:
+                        sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     print(pygame.mouse.get_pos())
-            self.screen.blit(self.restart_text, self.text_position)
+            self.screen.blit(self.settings.restart_text,
+                             self.settings.text_position)
             pygame.display.flip()
 
-    def _check_asteroid_reaches_bottom(self):
+    def _check_asteroid_collision(self):
         for asteroid in self.asteroids.sprites():
             if asteroid.rect.bottom >= self.screen.get_rect().bottom:
                 self._pause_game()
@@ -113,6 +109,8 @@ class RocketGame:
         if len(self.asteroids) == 0:
             self._create_asteroids()
         self.asteroids.update()
+        if pygame.sprite.spritecollideany(self.rocket, self.asteroids):
+            self._pause_game()
 
     def _check_to_destroy_asteroid(self):
         if pygame.sprite.groupcollide(self.bullets, self.asteroids, True, True):
