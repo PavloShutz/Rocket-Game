@@ -1,3 +1,6 @@
+from pygame.mixer import Sound
+
+
 class Settings:
     """Class for all game settings"""
     def __init__(self):
@@ -15,3 +18,4 @@ class Settings:
 
         self.asteroid_speed = 0.1
         self.asteroid_images = ['asteroid1.png', 'asteroid2.png']
+        self.explosion = Sound("explosion.wav")
