@@ -18,6 +18,7 @@ class RocketGame:
         self.settings = Settings()
         self.game_stats = GameStats()
         self.score = self.game_stats.score
+        self.current_game_score = 0
         self.font = pygame.font.Font(r"C:\Windows\Fonts\calibrib.ttf", 30)
 
         self.screen = pygame.display.set_mode((
@@ -79,8 +80,15 @@ class RocketGame:
             new_bullet.create_laser_sound()
 
     def _update_score(self):
-        self.score_text = self.font.render(f"Score: {self.score}", False, (212, 89, 31))
-        self.screen.blit(self.score_text, self.score_text.get_rect().topright)
+        self.current_score_text = self.font.render(
+            f"Current score: {self.current_game_score}",
+            True, (212, 89, 31)
+        )
+        self.score_text = self.font.render(
+            f"Best score: {self.score}", True, (212, 89, 31)
+        )
+        self.screen.blit(self.current_score_text, self.current_score_text.get_rect().topright)
+        self.screen.blit(self.score_text, self.score_text.get_rect().topleft)
 
     def _pause_game(self):
         self.paused_game = True
@@ -120,8 +128,10 @@ class RocketGame:
 
     def _check_to_destroy_asteroid(self):
         if pygame.sprite.groupcollide(self.bullets, self.asteroids, True, True):
-            self.score += 100
-            self.game_stats.save_current_score(self.score)
+            if self.current_game_score >= self.score:
+                self.score += 100
+                self.game_stats.save_current_score(self.score)
+            self.current_game_score += 100
             pygame.mixer.Sound.play(self.settings.explosion)
 
     def _create_asteroids(self):
