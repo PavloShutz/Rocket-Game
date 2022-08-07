@@ -2,6 +2,7 @@ import sys
 from random import randint
 
 import pygame
+import pygame_menu
 
 from settings import Settings
 from rocket import Rocket
@@ -30,8 +31,15 @@ class RocketGame:
         self.bullets = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
         self._create_asteroids()
+        self.menu = pygame_menu.Menu("Rocket in space", 1100, 700,
+            theme=pygame_menu.themes.THEME_BLUE
+        )
+        self.menu.add.button("Play", self.run_game)
+        self.menu.add.button("Quit", pygame_menu.events.EXIT)
+        self.menu.mainloop(self.screen)
 
     def run_game(self):
+        self.menu.close()
         while True:
             self._check_updates()
             self.rocket.update()
@@ -159,4 +167,3 @@ class RocketGame:
 
 if __name__ == '__main__':
     rg = RocketGame()
-    rg.run_game()
