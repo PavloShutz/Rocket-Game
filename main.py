@@ -95,8 +95,10 @@ class RocketGame:
         self.score_text = self.font.render(
             f"Best score: {self.score}", True, (212, 89, 31)
         )
-        self.screen.blit(self.current_score_text, self.current_score_text.get_rect().topright)
-        self.screen.blit(self.score_text, self.score_text.get_rect().topleft)
+        self.score_text_position = self.screen.get_rect().topleft
+        self.current_score_text_position = self.screen.get_rect().midtop
+        self.screen.blit(self.score_text, self.score_text_position)
+        self.screen.blit(self.current_score_text, self.current_score_text_position)
 
     def _pause_game(self):
         self.paused_game = True
@@ -118,6 +120,7 @@ class RocketGame:
     def _check_asteroid_collision(self):
         for asteroid in self.asteroids.sprites():
             if asteroid.rect.bottom >= self.screen.get_rect().bottom:
+                pygame.mixer.Sound.play(self.settings.game_over_sound)
                 self._pause_game()
 
     def _update_bullets(self):
@@ -132,6 +135,7 @@ class RocketGame:
             self._create_asteroids()
         self.asteroids.update()
         if pygame.sprite.spritecollideany(self.rocket, self.asteroids):
+            pygame.mixer.Sound.play(self.settings.game_over_sound)
             self._pause_game()
 
     def _check_to_destroy_asteroid(self):

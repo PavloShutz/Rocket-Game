@@ -21,6 +21,7 @@ class Settings:
         self.asteroid_speed = 0.1
         self.asteroid_images = ['asteroid1.png', 'asteroid2.png']
         self.explosion = Sound("explosion.wav")
+        self.game_over_sound = Sound("game_over.wav")
 
         self.text = \
             "Press \"Space\" to restart game or Press \"q\" to quit current game."
